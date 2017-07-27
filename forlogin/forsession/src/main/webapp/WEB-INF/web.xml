@@ -4,4 +4,24 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>ProcessStep1Servlelt</servlet-name>
+  	<display-name>ProcessStep1Servlelt</display-name>
+  	<description></description>
+  	<servlet-class>com.mayer.javaweb.ProcessStep1Servlelt</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ProcessStep2Servlet</servlet-name>
+  	<display-name>ProcessStep2Servlet</display-name>
+  	<description></description>
+  	<servlet-class>com.mayer.javaweb.ProcessStep2Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ProcessStep1Servlelt</servlet-name>
+  	<url-pattern>/processStep1</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProcessStep2Servlet</servlet-name>
+  	<url-pattern>/processStep2</url-pattern>
+  </servlet-mapping>
 </web-app>
