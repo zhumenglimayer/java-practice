@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
 	<bean id="helloWorld" class="com.mayer.spring.beans.HelloWorld">
 		<property name="name" value="Spring"></property>
@@ -55,5 +58,30 @@
 			</map>
 		</property>
 	</bean>
+	
+	<bean id="datasource" class="com.mayer.spring.beans.DataSource">
+		<property name="properties">
+			<props>
+				<prop key="user">root</prop>
+				<prop key="password">1234</prop>
+				<prop key="jdbcUrl">jdbc:mysql:///test</prop>
+				<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="newPerson4" class="com.mayer.spring.beans.collection.NewPerson">
+		<property name="name" value="Jack"></property>
+		<property name="age" value="18"></property>
+		<property name="cars" ref="cars"></property>
+	</bean>
+	
+	<util:list id="cars">
+		<ref bean="car1"/>
+		<ref bean="car2"/>
+		<ref bean="car3"/>
+	</util:list>
+	
+	<bean id="newPerson5" class="com.mayer.spring.beans.collection.NewPerson" p:name="Mary" p:age="50" p:cars-ref="cars"></bean>
 
 </beans>

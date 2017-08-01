@@ -14,6 +14,12 @@ public class Main {
 		NewPersonMap newpersonmap =(NewPersonMap) ctx.getBean("newPersonMap");
 		
 		System.out.println(newpersonmap);
+		
+		NewPerson newperson4 = (NewPerson) ctx.getBean("newPerson4");
+		System.out.println(newperson4);
+		
+		NewPerson newperson5 = (NewPerson) ctx.getBean("newPerson5");
+		System.out.println(newperson5);
 	}
 
 }

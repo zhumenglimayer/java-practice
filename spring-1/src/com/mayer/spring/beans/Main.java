@@ -24,5 +24,8 @@ public class Main {
 		
 		Person person = (Person) ctx.getBean("person");
 		System.out.println(person);
+		
+		DataSource dataSource = ctx.getBean(DataSource.class);
+		System.out.println(dataSource);
 	}
 }
