@@ -18,5 +18,42 @@
 		<constructor-arg value="shanghai" type="java.lang.String"></constructor-arg>
 		<constructor-arg value="230" type="int"></constructor-arg>
 	</bean>
+	
+	<bean id="car3" class="com.mayer.spring.beans.Car">
+		<property name="brand" value="Ford"></property>
+		<property name="corp" value="Beijing"></property>
+		<property name="price" value="23333"></property>
+	</bean>
+	
+	<bean id="person" class="com.mayer.spring.beans.Person">
+		<property name="name" value="Mike"></property>
+		<property name="age" value="32"></property>
+		<property name="car" ref="car3">
+		</property>
+	</bean>
+	
+	<bean id="newPerson" class="com.mayer.spring.beans.collection.NewPerson">
+		<property name="name" value="Rose"></property>
+		<property name="age" value="22"></property>
+		<property name="cars">
+			<list>
+				<ref bean="car1"/>
+				<ref bean="car2"/>
+				<ref bean="car3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="newPersonMap" class="com.mayer.spring.beans.collection.NewPersonMap">
+		<property name="name" value="Tom"></property>
+		<property name="age" value="40"></property>
+		<property name="cars">
+			<map>
+				<entry key="AA" value-ref="car1"></entry>
+				<entry key="BB" value-ref="car2"></entry>
+				<entry key="CC" value-ref="car3"></entry>
+			</map>
+		</property>
+	</bean>
 
 </beans>
