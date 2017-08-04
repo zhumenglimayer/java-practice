@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/applicationContext.xml</config>
 		<config>src/bean-autowire.xml</config>
+		<config>src/bean-relation.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
