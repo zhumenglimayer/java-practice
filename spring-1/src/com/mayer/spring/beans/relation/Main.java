@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.mayer.spring.beans.autowire.Address;
+import com.mayer.spring.beans.autowire.Car;
 import com.mayer.spring.beans.autowire.Person;
 
 public class Main {
@@ -21,6 +22,10 @@ public class Main {
 		
 		Person person = (Person) ctx.getBean("person");
 		System.out.println(person);
+		
+		Car car1 = (Car) ctx.getBean("car");
+		Car car2 = (Car) ctx.getBean("car");
+		System.out.println(car1==car2);
 	}
 
 }

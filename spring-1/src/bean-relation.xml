@@ -14,7 +14,7 @@
 		p:street="Tongjiroad" parent="address2"></bean>
 		
 	<bean id="car" class="com.mayer.spring.beans.autowire.Car"
-		p:brand="Audi" p:price="1234567"></bean>
+		p:brand="Audi" p:price="1234567" scope="prototype"></bean>
 		
 	<bean id="person" class="com.mayer.spring.beans.autowire.Person"
 		p:name="Jack" p:address-ref="address2" depends-on="car" p:car-ref="car"></bean>
