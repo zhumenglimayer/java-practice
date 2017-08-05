@@ -11,6 +11,7 @@
 		<config>src/bean-autowire.xml</config>
 		<config>src/bean-relation.xml</config>
 		<config>src/bean-properties.xml</config>
+		<config>src/bean-spel.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
