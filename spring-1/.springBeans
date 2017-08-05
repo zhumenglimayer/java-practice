@@ -12,6 +12,7 @@
 		<config>src/bean-relation.xml</config>
 		<config>src/bean-properties.xml</config>
 		<config>src/bean-spel.xml</config>
+		<config>src/bean-cycle.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
