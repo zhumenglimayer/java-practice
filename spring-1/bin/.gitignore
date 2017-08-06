@@ -1,3 +1,5 @@
 /com/
 /bean-spel.xml
 /bean-cycle.xml
+/bean-factory.xml
+/bean-factorybean.xml
