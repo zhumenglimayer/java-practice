@@ -3,12 +3,15 @@ package com.mayer.spring.aop.helloworld;
 public class Main {
 
 	public static void main(String[] args) {
-		ArithmeticCalculator arithmeticCalculator = null;
-		arithmeticCalculator = new ArithmeticCalculatorImpl();
-		int result = arithmeticCalculator.add(1, 3);
+//		ArithmeticCalculator arithmeticCalculator = null;
+//		arithmeticCalculator = new ArithmeticCalculatorImpl();
+		ArithmeticCalculator target = new ArithmeticCalculatorImpl();
+		ArithmeticCalculator proxy = new ArithmeticCalculatorLoggingProxy(target).getLoggingProxy();
+		
+		int result = proxy.add(1, 3);
 		System.out.println("---->" + result);
 		
-		result = arithmeticCalculator.div(4, 2);
+		result = proxy.div(4, 2);
 		System.out.println("---->" + result);
 	}
 
