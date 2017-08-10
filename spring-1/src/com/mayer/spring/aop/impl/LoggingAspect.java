@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -23,5 +24,11 @@ public class LoggingAspect {
 	public void afterMethod(JoinPoint joinPoint){
 		String methodName = joinPoint.getSignature().getName();
 		System.out.println("The method "+ methodName +" ends");
+	}
+	
+	@AfterReturning(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", returning="result")
+	public void afterReturning(JoinPoint joinPoint, Object result){
+		String methodName = joinPoint.getSignature().getName();
+		System.out.println("The method "+ methodName +" ends withs" + result);
 	}
 }
