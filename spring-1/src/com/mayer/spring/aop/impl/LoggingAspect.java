@@ -16,33 +16,33 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LoggingAspect {
-	@Before("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
-	public void beforeMeth(JoinPoint joinPoint){
-		String methodName = joinPoint.getSignature().getName();
-		List<Object> args = Arrays.asList(joinPoint.getArgs());
-		System.out.println("The method "+ methodName +" begins with"+ args);
-	}
+//	@Before("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
+//	public void beforeMeth(JoinPoint joinPoint){
+//		String methodName = joinPoint.getSignature().getName();
+//		List<Object> args = Arrays.asList(joinPoint.getArgs());
+//		System.out.println("The method "+ methodName +" begins with"+ args);
+//	}
+//	
+//	@After("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
+//	public void afterMethod(JoinPoint joinPoint){
+//		String methodName = joinPoint.getSignature().getName();
+//		System.out.println("The method "+ methodName +" ends");
+//	}
+//	
+//	@AfterReturning(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", returning="result")
+//	public void afterReturning(JoinPoint joinPoint, Object result){
+//		String methodName = joinPoint.getSignature().getName();
+//		System.out.println("The method "+ methodName +" ends withs" + result);
+//	}
+//	
+//	@AfterThrowing(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", throwing="ex")
+//	public void afterThrowing(JoinPoint joinPoint, Exception ex){
+//		String methodName = joinPoint.getSignature().getName();
+//		System.out.println("The method "+ methodName +" occurs exception:" + ex);
+//	}
 	
-	@After("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
-	public void afterMethod(JoinPoint joinPoint){
-		String methodName = joinPoint.getSignature().getName();
-		System.out.println("The method "+ methodName +" ends");
-	}
-	
-	@AfterReturning(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", returning="result")
-	public void afterReturning(JoinPoint joinPoint, Object result){
-		String methodName = joinPoint.getSignature().getName();
-		System.out.println("The method "+ methodName +" ends withs" + result);
-	}
-	
-	@AfterThrowing(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", throwing="ex")
-	public void afterThrowing(JoinPoint joinPoint, Exception ex){
-		String methodName = joinPoint.getSignature().getName();
-		System.out.println("The method "+ methodName +" occurs exception:" + ex);
-	}
-	
-	@Around("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
-	public void aroundMethod(ProceedingJoinPoint pjp){
+	@Around("execution(* com.mayer.spring.aop.impl.ArithmeticCalculator.*(int, int))")
+	public Object aroundMethod(ProceedingJoinPoint pjp){
 		Object result = null;
 		String methodName = pjp.getSignature().getName();
 		
@@ -56,5 +56,7 @@ public class LoggingAspect {
 			System.out.println("The method "+ methodName +" occurs exception:" + e);
 		}
 		System.out.println("The method "+ methodName +" ends");
+		return result;
 	}
+		
 }
