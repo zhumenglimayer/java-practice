@@ -11,37 +11,45 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LoggingAspect {
-//	@Before("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
-//	public void beforeMeth(JoinPoint joinPoint){
-//		String methodName = joinPoint.getSignature().getName();
-//		List<Object> args = Arrays.asList(joinPoint.getArgs());
-//		System.out.println("The method "+ methodName +" begins with"+ args);
-//	}
-//	
-//	@After("execution(* com.mayer.spring.aop.impl.*.*(int, int))")
-//	public void afterMethod(JoinPoint joinPoint){
-//		String methodName = joinPoint.getSignature().getName();
-//		System.out.println("The method "+ methodName +" ends");
-//	}
-//	
-//	@AfterReturning(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", returning="result")
-//	public void afterReturning(JoinPoint joinPoint, Object result){
-//		String methodName = joinPoint.getSignature().getName();
-//		System.out.println("The method "+ methodName +" ends withs" + result);
-//	}
-//	
-//	@AfterThrowing(value="execution(* com.mayer.spring.aop.impl.*.*(int, int))", throwing="ex")
-//	public void afterThrowing(JoinPoint joinPoint, Exception ex){
-//		String methodName = joinPoint.getSignature().getName();
-//		System.out.println("The method "+ methodName +" occurs exception:" + ex);
-//	}
 	
-	@Around("execution(* com.mayer.spring.aop.impl.ArithmeticCalculator.*(int, int))")
+	@Pointcut("execution(* com.mayer.spring.aop.impl.ArithmeticCalculator.*(..))")
+	public void declareJoinPointExpression(){
+		
+	}
+	
+	@Before("declareJoinPointExpression()")
+	public void beforeMeth(JoinPoint joinPoint){
+		String methodName = joinPoint.getSignature().getName();
+		List<Object> args = Arrays.asList(joinPoint.getArgs());
+		System.out.println("The method "+ methodName +" begins with"+ args);
+	}
+	
+	@After("declareJoinPointExpression()")
+	public void afterMethod(JoinPoint joinPoint){
+		String methodName = joinPoint.getSignature().getName();
+		System.out.println("The method "+ methodName +" ends");
+	}
+	
+	@AfterReturning(value="declareJoinPointExpression()", returning="result")
+	public void afterReturning(JoinPoint joinPoint, Object result){
+		String methodName = joinPoint.getSignature().getName();
+		System.out.println("The method "+ methodName +" ends withs" + result);
+	}
+	
+	@AfterThrowing(value="declareJoinPointExpression()", throwing="ex")
+	public void afterThrowing(JoinPoint joinPoint, Exception ex){
+		String methodName = joinPoint.getSignature().getName();
+		System.out.println("The method "+ methodName +" occurs exception:" + ex);
+	}
+	
+	/*
+	@Around("declareJoinPointExpression()")
 	public Object aroundMethod(ProceedingJoinPoint pjp){
 		Object result = null;
 		String methodName = pjp.getSignature().getName();
@@ -58,5 +66,6 @@ public class LoggingAspect {
 		System.out.println("The method "+ methodName +" ends");
 		return result;
 	}
+	*/
 		
 }
