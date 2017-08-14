@@ -18,6 +18,7 @@
 		<config>src/bean-annotation.xml</config>
 		<config>src/bean-generic-di.xml</config>
 		<config>src/aop-impl.xml</config>
+		<config>src/aop-xml.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
