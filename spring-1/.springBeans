@@ -19,6 +19,7 @@
 		<config>src/bean-generic-di.xml</config>
 		<config>src/aop-impl.xml</config>
 		<config>src/aop-xml.xml</config>
+		<config>src/jdbc.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
