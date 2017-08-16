@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -14,6 +16,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
@@ -22,10 +27,12 @@ public class JDBCTest {
 	ApplicationContext ctx = null;
 	private JdbcTemplate jdbcTemplate;
 	private CustomersDao customersDao;
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	{
 		ctx = new ClassPathXmlApplicationContext("jdbc.xml");
 		jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
 		customersDao = ctx.getBean(CustomersDao.class);
+		namedParameterJdbcTemplate = ctx.getBean(NamedParameterJdbcTemplate.class);
 	}
 	
 	@Test
@@ -75,6 +82,27 @@ public class JDBCTest {
 	public void testDataSource() throws SQLException {
 		DataSource dataSource = ctx.getBean(DataSource.class);
 		System.out.println(dataSource.getConnection());
+	}
+	
+	@Test
+	public void testNamedParameterJdbcTemplate(){
+		String sql = "INSERT INTO customers(name, address, phone) VALUES(:name, :address, :phone) ";
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("name", "ZML");
+		paramMap.put("address", "NanJing");
+		paramMap.put("phone", "12300009887");
+		namedParameterJdbcTemplate.update(sql, paramMap);
+	}
+	
+	@Test
+	public void testNamedParameterJdbcTemplate2(){
+		String sql = "INSERT INTO customers(name, address, phone) VALUES(:name, :address, :phone) ";
+		Customers customer = new Customers();
+		customer.setName("ZZZ");
+		customer.setAddress("HaiKou");
+		customer.setPhone("13977778888");
+		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(customer);
+		namedParameterJdbcTemplate.update(sql, paramSource);
 	}
 
 }
