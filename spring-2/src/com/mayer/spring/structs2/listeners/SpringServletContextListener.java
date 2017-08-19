@@ -1,8 +1,12 @@
 package com.mayer.spring.structs2.listeners;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Application Lifecycle Listener implementation class SpringServletContextListener
@@ -29,7 +33,10 @@ public class SpringServletContextListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  { 
-         // TODO Auto-generated method stub
+    	ServletContext servletContext = sce.getServletContext();
+    	String config = servletContext.getInitParameter("configLocation");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(config);
+        servletContext.setAttribute("ApplicationContext", ctx);
     }
 	
 }
