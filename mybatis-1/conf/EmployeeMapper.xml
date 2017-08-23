@@ -11,6 +11,7 @@
 
 -->
 
+
 <mapper namespace="com.mayer.mybatis.helloworld.dao.EmployeeMapper">
 	<select id="getEmpById" resultType="com.mayer.mybatis.helloworld.beans.Employee">
 		select id, last_name lastName, gender,email  from tbl_employee where id = #{id}
