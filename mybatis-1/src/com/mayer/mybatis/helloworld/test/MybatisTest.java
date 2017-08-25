@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.mayer.mybatis.helloworld.beans.Employee;
 import com.mayer.mybatis.helloworld.dao.EmployeeMapper;
+import com.mayer.mybatis.helloworld.dao.EmployeeMapperAnnotation;
 
 public class MybatisTest {
 	
@@ -49,6 +50,21 @@ public class MybatisTest {
 		}
 		
 		
+		
+	}
+	
+	@Test
+	public void testUseByAnnotation() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperAnnotation mapper = sqlSession.getMapper(EmployeeMapperAnnotation.class);
+			Employee employee = mapper.getEmpById(1);
+			System.out.println(employee);
+		}finally{
+			sqlSession.close();
+		}
 		
 	}
 
