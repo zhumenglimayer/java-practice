@@ -34,7 +34,8 @@
 	</databaseIdProvider>
 	
 	<mappers>
-		<mapper resource="mybatis/mapper/EmployeeMapper.xml" />
-		<mapper class="com.mayer.mybatis.helloworld.dao.EmployeeMapperAnnotation"/>
+		<!-- <mapper resource="mybatis/mapper/EmployeeMapper.xml" />
+		<mapper class="com.mayer.mybatis.helloworld.dao.EmployeeMapperAnnotation"/> -->
+		<package name="com.mayer.mybatis.helloworld.dao"/>
 	</mappers>
 </configuration>
