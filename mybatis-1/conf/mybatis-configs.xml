@@ -36,6 +36,8 @@
 	<mappers>
 		<!-- <mapper resource="mybatis/mapper/EmployeeMapper.xml" />
 		<mapper class="com.mayer.mybatis.helloworld.dao.EmployeeMapperAnnotation"/> -->
+		<package name="com.mayer.mybatis.crud.dao"/>
 		<package name="com.mayer.mybatis.helloworld.dao"/>
+		
 	</mappers>
 </configuration>
