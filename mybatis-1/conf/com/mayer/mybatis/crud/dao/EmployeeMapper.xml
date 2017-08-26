@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!--  不是通過接口實現
+<mapper namespace="com.mayer.mybatis.helloworld.EmployeeMapper">
+	<select id="selectEmp" resultType="com.mayer.mybatis.helloworld.beans.Employee">
+		select id, last_name lastName, gender,email  from tbl_employee where id = #{id}
+	</select>
+</mapper>
+
+-->
+
+
+<mapper namespace="com.mayer.mybatis.helloworld.dao.EmployeeMapper">
+	<select id="getEmpById" resultType="emp">
+		select id, last_name lastName, gender,email  from tbl_employee where id = #{id}
+	</select>
+</mapper>
