@@ -33,8 +33,9 @@ public class MybatisTest {
 		try{
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			//添加
-			//Employee employee = new Employee(null, "jerry", "1", "jerry@163.com");
-			//mapper.addEmp(employee);
+			Employee employee = new Employee(null, "jerry", "1", "jerry@163.com");
+			mapper.addEmp(employee);
+			System.out.println(employee.getId());
 			
 			//修改
 //			Employee employee = new Employee(1, "jerry", "1", "jerry@163.com");
@@ -42,7 +43,7 @@ public class MybatisTest {
 			
 			
 			//删除
-			mapper.deleteEmp(4);
+//			mapper.deleteEmp(4);
 			
 			
 			sqlSession.commit();
@@ -54,6 +55,35 @@ public class MybatisTest {
 		
 	}
 	
-	
+	@Test
+	public void test02() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			
+			Employee employee = mapper.getEmpByIdLastName(1, "jerry");
+			
+			System.out.println(employee);
+			
+			//修改
+//			Employee employee = new Employee(1, "jerry", "1", "jerry@163.com");
+//			mapper.updateEmp(employee);
+			
+			
+			//删除
+//			mapper.deleteEmp(4);
+			
+			
+		}finally{
+			sqlSession.close();
+		}
+		
+		
+		
+	}
 
 }
