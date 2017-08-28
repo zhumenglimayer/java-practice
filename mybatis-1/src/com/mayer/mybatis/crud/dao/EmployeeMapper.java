@@ -1,10 +1,14 @@
 package com.mayer.mybatis.crud.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.mayer.mybatis.crud.beans.Employee;
 
 public interface EmployeeMapper {
+	
+	public Employee getEmpByMap(Map<String, Object> map);
 	
 	public Employee getEmpByIdLastName(@Param("id")Integer id, @Param("lastName")String lastName);
 	

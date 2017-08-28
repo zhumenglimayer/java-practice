@@ -14,6 +14,10 @@
 
 <mapper namespace="com.mayer.mybatis.crud.dao.EmployeeMapper">
 
+	<select id="getEmpByMap" resultType="com.mayer.mybatis.crud.beans.Employee">
+		select id, last_name lastName, gender, email from tbl_employee where id = #{id} and last_name = #{lastName}
+	</select>
+		
 	<select id="getEmpByIdLastName" resultType="com.mayer.mybatis.crud.beans.Employee">
 		select id, last_name lastName, gender, email from tbl_employee where id = #{id} and last_name = #{lastName}	
 	</select>
