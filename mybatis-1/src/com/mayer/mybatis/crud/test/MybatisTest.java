@@ -120,6 +120,7 @@ public class MybatisTest {
 		
 	}
 	
+	/*useActualParamName的使用*/
 	@Test
 	public void test04() throws IOException{
 		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
