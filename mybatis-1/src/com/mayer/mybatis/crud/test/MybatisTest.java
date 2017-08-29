@@ -119,5 +119,35 @@ public class MybatisTest {
 		
 		
 	}
+	
+	@Test
+	public void test04() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			Employee employee = mapper.getEmpByUseActualParamName(1, "jerry");
+			
+			System.out.println(employee);
+			
+			//修改
+//			Employee employee = new Employee(1, "jerry", "1", "jerry@163.com");
+//			mapper.updateEmp(employee);
+			
+			
+			//删除
+//			mapper.deleteEmp(4);
+			
+			
+		}finally{
+			sqlSession.close();
+		}
+		
+		
+		
+	}
 
 }

@@ -10,6 +10,8 @@ public interface EmployeeMapper {
 	
 	public Employee getEmpByMap(Map<String, Object> map);
 	
+	public Employee getEmpByUseActualParamName(Integer id, String lastName);
+	
 	public Employee getEmpByIdLastName(@Param("id")Integer id, @Param("lastName")String lastName);
 	
 	public Employee getEmpById(Integer id);
