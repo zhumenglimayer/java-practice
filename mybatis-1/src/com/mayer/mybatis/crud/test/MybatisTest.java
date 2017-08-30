@@ -3,6 +3,7 @@ package com.mayer.mybatis.crud.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
@@ -35,7 +36,7 @@ public class MybatisTest {
 		try{
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			//添加
-			Employee employee = new Employee(null, "jerry", "1", "jerry@163.com");
+			Employee employee = new Employee(null, "tom", "0", "tom@163.com");
 			mapper.addEmp(employee);
 			System.out.println(employee.getId());
 			
@@ -71,15 +72,6 @@ public class MybatisTest {
 			
 			System.out.println(employee);
 			
-			//修改
-//			Employee employee = new Employee(1, "jerry", "1", "jerry@163.com");
-//			mapper.updateEmp(employee);
-			
-			
-			//删除
-//			mapper.deleteEmp(4);
-			
-			
 		}finally{
 			sqlSession.close();
 		}
@@ -99,19 +91,9 @@ public class MybatisTest {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", 1);
 			map.put("lastName", "jerry");
+			map.put("tableName", "tbl_employee");
 			Employee employee = mapper.getEmpByMap(map);
-			
 			System.out.println(employee);
-			
-			//修改
-//			Employee employee = new Employee(1, "jerry", "1", "jerry@163.com");
-//			mapper.updateEmp(employee);
-			
-			
-			//删除
-//			mapper.deleteEmp(4);
-			
-			
 		}finally{
 			sqlSession.close();
 		}
@@ -131,16 +113,75 @@ public class MybatisTest {
 		try{
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			Employee employee = mapper.getEmpByUseActualParamName(1, "jerry");
-			
 			System.out.println(employee);
 			
-			//修改
-//			Employee employee = new Employee(1, "jerry", "1", "jerry@163.com");
-//			mapper.updateEmp(employee);
+		}finally{
+			sqlSession.close();
+		}
+		
+		
+		
+	}
+	
+	@Test
+	public void testEmpsByLike() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			List<Employee> employees = mapper.getEmpsByLastNameLike("%e%");
+			
+			for (Employee employee : employees) {
+				System.out.println(employee);
+			}
+			
+		}finally{
+			sqlSession.close();
+		}
+		
+		
+		
+	}
+	
+	@Test
+	public void testEmpByIdReturnMap() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			Map<String, Object> employee = mapper.getEmpByIdReturnMap(1);
+			
+				System.out.println(employee);
 			
 			
-			//删除
-//			mapper.deleteEmp(4);
+			
+		}finally{
+			sqlSession.close();
+		}
+		
+		
+		
+	}
+	
+	@Test
+	public void testEmpByLastNameLikeReturnMap() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			Map<Integer, Employee> employees = mapper.getEmpsByLastNameLikeReturnMap("%e%");
+			
+				System.out.println(employees);
+			
 			
 			
 		}finally{
