@@ -48,7 +48,29 @@
   		column="dept_id"></association>
   	</resultMap>
   	
-  	<select id="getEmpByIdByStep" resultMap="MyEmpByStep">
+  	<resultMap type="com.mayer.mybatis.crud.beans.Employee" id="MyEmpByStepDis">
+  		<id column="id" property="id"/>
+  		<result column="last_name" property="lastName"/>
+  		<result column="gender" property="gender"/>
+  		<result column="email" property="email"/>
+  		<discriminator javaType="string" column="gender">
+  			<case value="0" resultType="com.mayer.mybatis.crud.beans.Employee">
+  				<association property="department" 
+  				select="com.mayer.mybatis.crud.dao.DepartmentMapper.getDeptById" 
+  				column="dept_id">
+  				</association>
+  			</case>
+  			<case value="1" resultType="com.mayer.mybatis.crud.beans.Employee">
+  				<id column="id" property="id"/>
+  				<result column="last_name" property="lastName"/>
+  				<result column="last_name" property="gender"/>
+  				<result column="email" property="email"/>
+  			</case>
+  		</discriminator>
+  		
+  	</resultMap>
+  	
+  	<select id="getEmpByIdByStep" resultMap="MyEmpByStepDis">
   		select * from tbl_employee where id = #{id}
   	</select>
   	
@@ -60,6 +82,8 @@
   		select="com.mayer.mybatis.crud.dao.DepartmentMapper.getEmpsById"
   		column="dept_id"></collection>
   	</resultMap>
+  	
+  	
   	<select id="getEmpsByDeptIdStep" resultMap="MyEmpsByDept">
   		select * from tbl_department where dept_id = #{id}
   	</select>
