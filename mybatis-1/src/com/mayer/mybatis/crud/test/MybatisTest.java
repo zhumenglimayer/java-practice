@@ -12,8 +12,10 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import com.mayer.mybatis.crud.beans.Department;
 import com.mayer.mybatis.crud.beans.Employee;
 import com.mayer.mybatis.crud.dao.EmployeeMapper;
+import com.mayer.mybatis.crud.dao.EmployeeMapperPlus;
 
 
 public class MybatisTest {
@@ -188,7 +190,77 @@ public class MybatisTest {
 			sqlSession.close();
 		}
 		
+	}
+	
+	@Test
+	public void testEmpByIdResultMap() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+			Employee employee = mapper.getEmpByIdResultMap(1);
+			System.out.println(employee);
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	@Test
+	public void testEmpAndDeptByIdResultMap() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+			Employee employee = mapper.getEmpAndDeptByIdResultMap(1);
+			System.out.println(employee);
+			System.out.println(employee.getDepartment());
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	@Test
+	public void testEmpAndDeptByIdByStep() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+			Employee employee = mapper.getEmpByIdByStep(1);
+//			System.out.println(employee);
+			System.out.println(employee.getLastName());
+//			System.out.println(employee.getDepartment());
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	@Test
+	public void testEmpsByDeptIdStep() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+			Department department = mapper.getEmpsByDeptIdStep(1);
+//			System.out.println(department);
+			System.out.println(department.getDepartmentName());
+		}finally{
+			sqlSession.close();
+		}
 		
 	}
 

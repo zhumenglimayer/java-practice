@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mayer.mybatis.crud.dao.EmployeeMapperPlus">
+  
+  <resultMap type="com.mayer.mybatis.crud.beans.Employee" id="MyEmp">
+  	<id column="id" property="id"/>
+  	<result column="last_name" property="lastName"/>
+  </resultMap>
+  	<select id="getEmpByIdResultMap" resultMap="MyEmp">
+  		select *  from tbl_employee where id = #{id}
+  	</select>
+  	
+  	<resultMap type="com.mayer.mybatis.crud.beans.Employee" id="MyDifEmp">
+  		<id column="id" property="id"/>
+  		<result column="last_name" property="lastName"/>
+  		<result column="gender" property="gender"/>
+  		<result column="email" property="email"/>
+  		<result column="d_id" property="department.id"/>
+  		<result column="dept_name" property="department.departmentName"/>
+  	</resultMap>
+  	
+  	<resultMap type="com.mayer.mybatis.crud.beans.Employee" id="MyDifEmp2">
+  		<id column="id" property="id"/>
+  		<result column="last_name" property="lastName"/>
+  		<result column="gender" property="gender"/>
+  		<result column="email" property="email"/>
+  		<association property="department" javaType="com.mayer.mybatis.crud.beans.Department">
+  			<id column="d_id" property="id"/>
+  			<result column="dept_name" property="departmentName"/>
+  		</association>
+  	</resultMap>
+  	<select id="getEmpAndDeptByIdResultMap" resultMap="MyDifEmp2">
+  		select e.id id, e.last_name last_name, e.gender gender, e.email email, 
+  		e.dept_id did, d.dept_id d_id, d.dept_name dept_name from tbl_employee e,
+  		tbl_department d where e.dept_id = d.dept_id and id = #{id}
+  	</select>
+  	
+  	<resultMap type="com.mayer.mybatis.crud.beans.Employee" id="MyEmpByStep">
+  		<id column="id" property="id"/>
+  		<result column="last_name" property="lastName"/>
+  		<result column="gender" property="gender"/>
+  		<result column="email" property="email"/>
+  		<association property="department" 
+  		select="com.mayer.mybatis.crud.dao.DepartmentMapper.getDeptById" 
+  		column="dept_id"></association>
+  	</resultMap>
+  	
+  	<select id="getEmpByIdByStep" resultMap="MyEmpByStep">
+  		select * from tbl_employee where id = #{id}
+  	</select>
+  	
+  	
+  	<resultMap type="com.mayer.mybatis.crud.beans.Department" id="MyEmpsByDept">
+  		<id column="dept_id" property="id"/>
+  		<result column="dept_name" property="departmentName"/>
+  		<collection property="emps" 
+  		select="com.mayer.mybatis.crud.dao.DepartmentMapper.getEmpsById"
+  		column="dept_id"></collection>
+  	</resultMap>
+  	<select id="getEmpsByDeptIdStep" resultMap="MyEmpsByDept">
+  		select * from tbl_department where dept_id = #{id}
+  	</select>
+  
+  </mapper>

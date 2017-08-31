@@ -6,7 +6,7 @@ public class Employee {
 	private String lastName;
 	private String gender;
 	private String email;
-	
+	private Department department;
 	
 	public Employee() {
 		super();
@@ -46,9 +46,23 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Department getDepartment() {
+		return department;
+	}
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", lastName=" + lastName + ", gender=" + gender + ", email=" + email + "]";
+		return "Employee [id=" + id + ", lastName=" + lastName + ", gender=" + gender + ", email=" + email
+				+ ", department=" + department + "]";
 	}
+
+
 	
 }

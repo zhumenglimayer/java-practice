@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mayer.mybatis.crud.dao.DepartmentMapper">
+  	<select id="getDeptById" resultType="com.mayer.mybatis.crud.beans.Department">
+  		select dept_id id, dept_name departmentName from tbl_department where dept_id = #{id}
+  	</select>
+  	
+  	
+  	
+  	<select id="getEmpsById" resultType="com.mayer.mybatis.crud.beans.Employee">
+  		select id, last_name lastName, gender,email from tbl_employee where dept_id = #{id}
+  	</select>
+  </mapper>
