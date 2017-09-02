@@ -1,5 +1,9 @@
 package com.mayer.mybatis.crud.dao;
 
-public interface EmployeeMapperDynamicSQL {
+import java.util.List;
 
+import com.mayer.mybatis.crud.beans.Employee;
+
+public interface EmployeeMapperDynamicSQL {
+	public List<Employee> getEmpsByConditionIf(Employee employee);
 }

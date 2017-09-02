@@ -15,6 +15,7 @@ import org.junit.Test;
 import com.mayer.mybatis.crud.beans.Department;
 import com.mayer.mybatis.crud.beans.Employee;
 import com.mayer.mybatis.crud.dao.EmployeeMapper;
+import com.mayer.mybatis.crud.dao.EmployeeMapperDynamicSQL;
 import com.mayer.mybatis.crud.dao.EmployeeMapperPlus;
 
 
@@ -258,6 +259,24 @@ public class MybatisTest {
 			Department department = mapper.getEmpsByDeptIdStep(1);
 //			System.out.println(department);
 			System.out.println(department.getDepartmentName());
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	@Test
+	public void testGetEmpsByConditionIf() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+			Employee employee = new Employee(1, "%e%", null, null);
+			List<Employee> employees = mapper.getEmpsByConditionIf(employee);
+			System.out.println(employees);
 		}finally{
 			sqlSession.close();
 		}
