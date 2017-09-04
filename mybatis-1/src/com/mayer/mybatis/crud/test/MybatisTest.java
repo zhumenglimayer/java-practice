@@ -284,5 +284,25 @@ public class MybatisTest {
 		}
 		
 	}
+	
+	@Test
+	public void testGetEmpsByConditionChoose() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+			Employee employee = new Employee(null, null, null, null);
+			List<Employee> employees = mapper.getEmpsByConditionChoose(employee);
+			for (Employee emp : employees) {
+				System.out.println(emp);
+			}
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
 
 }

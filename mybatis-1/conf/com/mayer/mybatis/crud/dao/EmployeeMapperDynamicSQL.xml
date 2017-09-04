@@ -34,5 +34,28 @@
   			</if>
   		</trim> -->
   	</select>
+  	
+  	<select id="getEmpsByConditionChoose" resultType="com.mayer.mybatis.crud.beans.Employee">
+  		select * from tbl_employee
+  		<where>
+  			<choose>
+  				<when test="id!=null">
+  					id=#{id}
+  				</when>
+  				<when test="lastName!=null">
+  					last_name like #{lastName}
+  				</when>
+  				<when test="email!=null">
+  					email=#{email}
+  				</when>
+  				<when test="gender!=null">
+  					gender=#{gender}
+  				</when>
+  				<otherwise>
+  					1=1
+  				</otherwise>
+  			</choose>
+  		</where>
+  	</select>
   </mapper>
   
