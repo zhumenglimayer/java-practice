@@ -304,5 +304,23 @@ public class MybatisTest {
 		}
 		
 	}
+	
+	@Test
+	public void testUpdateEmpsByConditionSet() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+			Employee employee = new Employee(1, "Rose", null, null);
+			mapper.updateEmpByConditionSet(employee);
+			sqlSession.commit();
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
 
 }
