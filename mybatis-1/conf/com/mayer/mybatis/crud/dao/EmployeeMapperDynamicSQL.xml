@@ -75,5 +75,12 @@
   			id=#{id}
   		</where>
   	</update>
+  	
+  	<select id="getEmpsByConditionForeach" resultType="com.mayer.mybatis.crud.beans.Employee" >
+  		select * from tbl_employee where id in
+  		<foreach collection="list" open="(" separator="," close=")" item="item_id">
+  			#{item_id}
+  		</foreach>
+  	</select>
   </mapper>
   

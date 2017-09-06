@@ -2,6 +2,7 @@ package com.mayer.mybatis.crud.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -317,6 +318,25 @@ public class MybatisTest {
 			Employee employee = new Employee(1, "Rose", null, null);
 			mapper.updateEmpByConditionSet(employee);
 			sqlSession.commit();
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
+	
+	@Test
+	public void testUpdateEmpsByConditionForeach() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+			List<Employee> employees = mapper.getEmpsByConditionForeach(Arrays.asList(1,2,3,7,8));
+			for (Employee employee : employees) {
+				System.out.println(employee);
+			}
 		}finally{
 			sqlSession.close();
 		}
