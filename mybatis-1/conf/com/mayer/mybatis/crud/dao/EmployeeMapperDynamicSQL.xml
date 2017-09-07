@@ -89,5 +89,13 @@
   			(#{emp.lastName},#{emp.email},#{emp.gender},#{emp.department.id})
   		</foreach>
   	</insert>
+  	
+  	<sql id="insertColumn">
+  		id, last_name, email, gender
+  	</sql>
+  	<select id="getEmpsBySql" resultType="com.mayer.mybatis.crud.beans.Employee">
+  		select <include refid="insertColumn"></include>
+  		from tbl_employee 
+  	</select>
   </mapper>
   

@@ -364,5 +364,24 @@ public class MybatisTest {
 		}
 		
 	}
+	
+	@Test
+	public void testGetEmpsBySql() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapperDynamicSQL mapper = sqlSession.getMapper(EmployeeMapperDynamicSQL.class);
+			List<Employee> employees = mapper.getEmpsBySql();
+			for (Employee emp : employees) {
+				System.out.println(emp);
+			}
+		}finally{
+			sqlSession.close();
+		}
+		
+	}
 
 }

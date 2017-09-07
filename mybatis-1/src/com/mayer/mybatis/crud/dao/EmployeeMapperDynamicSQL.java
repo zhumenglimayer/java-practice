@@ -12,4 +12,5 @@ public interface EmployeeMapperDynamicSQL {
 	public void updateEmpByConditionSet(Employee employee);
 	public List<Employee> getEmpsByConditionForeach(List<Integer> ids);
 	public void addEmpsByConditionForeach(@Param("emps")List<Employee> emps);
+	public List<Employee> getEmpsBySql();
 }
