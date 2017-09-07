@@ -7,6 +7,16 @@ public class Department {
 	private String departmentName;
 	private List<Employee> emps;
 	
+	
+	
+	public Department(Integer id) {
+		super();
+		this.id = id;
+	}
+	public Department() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public List<Employee> getEmps() {
 		return emps;
 	}

@@ -82,5 +82,12 @@
   			#{item_id}
   		</foreach>
   	</select>
+  	
+  	<insert id="addEmpsByConditionForeach">
+  		insert into tbl_employee(last_name, email, gender, dept_id) values
+  		<foreach collection="emps" item="emp" separator=",">
+  			(#{emp.lastName},#{emp.email},#{emp.gender},#{emp.department.id})
+  		</foreach>
+  	</insert>
   </mapper>
   

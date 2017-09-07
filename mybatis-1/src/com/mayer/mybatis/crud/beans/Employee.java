@@ -8,6 +8,18 @@ public class Employee {
 	private String email;
 	private Department department;
 	
+	
+	
+	public Employee(Integer id, String lastName, String gender, String email, Department department) {
+		super();
+		this.id = id;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.email = email;
+		this.department = department;
+	}
+
+
 	public Employee() {
 		super();
 	}
