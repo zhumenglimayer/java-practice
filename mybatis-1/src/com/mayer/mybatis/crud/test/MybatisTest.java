@@ -383,5 +383,28 @@ public class MybatisTest {
 		}
 		
 	}
+	
+	@Test
+	public void testCache() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		try{
+			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+			
+			Employee employee1 = mapper.getEmpById(1);
+			Employee employee2 = mapper.getEmpById(1);
+			System.out.println(employee1);
+			System.out.println(employee1==employee2);
+			
+		}finally{
+			sqlSession.close();
+		}
+		
+		
+		
+	}
 
 }
