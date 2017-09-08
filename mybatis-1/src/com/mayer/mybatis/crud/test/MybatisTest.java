@@ -406,5 +406,30 @@ public class MybatisTest {
 		
 		
 	}
+	
+	@Test
+	public void testSecondLevelCache() throws IOException{
+		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+		
+		//获取到的sqlsession不会自动提交数据
+		SqlSession sqlSession1 = sqlSessionFactory.openSession();
+		SqlSession sqlSession2 = sqlSessionFactory.openSession();
+		try{
+			EmployeeMapper mapper1 = sqlSession1.getMapper(EmployeeMapper.class);
+			EmployeeMapper mapper2 = sqlSession2.getMapper(EmployeeMapper.class);
+			Employee employee1 = mapper1.getEmpById(1);
+			System.out.println(employee1);
+			sqlSession1.close();
+			Employee employee2 = mapper2.getEmpById(1);
+			System.out.println(employee2);
+			sqlSession2.close();
+			System.out.println(employee1==employee2);
+			
+		}finally{
+		}
+		
+		
+		
+	}
 
 }
