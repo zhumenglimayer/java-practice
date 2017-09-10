@@ -381,7 +381,6 @@ public class MybatisTest {
 		}finally{
 			sqlSession.close();
 		}
-		
 	}
 	
 	@Test
@@ -398,13 +397,9 @@ public class MybatisTest {
 			Employee employee2 = mapper.getEmpById(1);
 			System.out.println(employee1);
 			System.out.println(employee1==employee2);
-			
 		}finally{
 			sqlSession.close();
 		}
-		
-		
-		
 	}
 	
 	@Test
@@ -424,12 +419,9 @@ public class MybatisTest {
 			System.out.println(employee2);
 			sqlSession2.close();
 			System.out.println(employee1==employee2);
-			
 		}finally{
+			
 		}
-		
-		
-		
 	}
 
 }
