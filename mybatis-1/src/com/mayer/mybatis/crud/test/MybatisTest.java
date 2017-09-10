@@ -59,8 +59,6 @@ public class MybatisTest {
 			sqlSession.close();
 		}
 		
-		
-		
 	}
 	
 	@Test
@@ -80,8 +78,6 @@ public class MybatisTest {
 		}finally{
 			sqlSession.close();
 		}
-		
-		
 		
 	}
 	@Test
@@ -103,8 +99,6 @@ public class MybatisTest {
 			sqlSession.close();
 		}
 		
-		
-		
 	}
 	
 	/*useActualParamName的使用*/
@@ -123,8 +117,6 @@ public class MybatisTest {
 		}finally{
 			sqlSession.close();
 		}
-		
-		
 		
 	}
 	
@@ -147,8 +139,6 @@ public class MybatisTest {
 			sqlSession.close();
 		}
 		
-		
-		
 	}
 	
 	@Test
@@ -161,16 +151,11 @@ public class MybatisTest {
 		try{
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			Map<String, Object> employee = mapper.getEmpByIdReturnMap(1);
-			
-				System.out.println(employee);
-			
-			
+			System.out.println(employee);
 			
 		}finally{
 			sqlSession.close();
 		}
-		
-		
 		
 	}
 	
@@ -184,10 +169,7 @@ public class MybatisTest {
 		try{
 			EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 			Map<Integer, Employee> employees = mapper.getEmpsByLastNameLikeReturnMap("%e%");
-			
-				System.out.println(employees);
-			
-			
+			System.out.println(employees);
 			
 		}finally{
 			sqlSession.close();
