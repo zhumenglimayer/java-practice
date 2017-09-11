@@ -13,37 +13,10 @@
 		<setting name="cacheEnabled" value="true"/>
 	</settings>
 	
-	<typeAliases>
-		<!-- <typeAlias type="com.mayer.mybatis.helloworld.beans.Employee"/> -->
-		<package name="com.mayer.mybatis.helloworld.beans"/>
-	</typeAliases>
-	
-	
-	
-	<environments default="development">
-		<environment id="development">
-			<transactionManager type="JDBC" />
-			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://127.0.0.1:3306/mybatis" />
-				<property name="username" value="root" />
-				<property name="password" value="1234567890" />
-			</dataSource>
-		</environment>
-	</environments>
-	
-	
 	<databaseIdProvider type="DB_VENDOR">
 		<property name="MySQL" value="mysql"/>
 		<property name="SQL Server" value="sqlserver"/>
 		<property name="Oracle" value="oracle"/>
 	</databaseIdProvider>
 	
-	<mappers>
-		<!-- <mapper resource="mybatis/mapper/EmployeeMapper.xml" />
-		<mapper class="com.mayer.mybatis.helloworld.dao.EmployeeMapperAnnotation"/> -->
-		<package name="com.mayer.mybatis.crud.dao"/>
-		<package name="com.mayer.mybatis.helloworld.dao"/>
-		
-	</mappers>
 </configuration>
