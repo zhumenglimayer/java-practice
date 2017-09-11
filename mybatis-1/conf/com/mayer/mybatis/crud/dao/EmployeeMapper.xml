@@ -13,7 +13,9 @@
 
 
 <mapper namespace="com.mayer.mybatis.crud.dao.EmployeeMapper">
-	<cache eviction="FIFO"></cache>
+	<!-- <cache eviction="FIFO"></cache> -->
+	
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
 
 	<select id="getEmpsByLastNameLikeReturnMap" resultType="com.mayer.mybatis.crud.beans.Employee">
 		select id, last_name lastName, gender, email from tbl_employee where last_name like #{lastName}
