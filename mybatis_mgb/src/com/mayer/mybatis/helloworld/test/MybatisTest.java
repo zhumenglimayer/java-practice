@@ -53,6 +53,7 @@ public class MybatisTest {
 			Criteria criteria = example.createCriteria();
 			criteria.andLastNameLike("%e%");
 			criteria.andGenderEqualTo("1");
+			
 			List<Employee> emps = employeeMapper.selectByExample(example);
 			for (Employee employee : emps) {
 				System.out.println(employee.getId());
