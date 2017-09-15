@@ -34,6 +34,10 @@
 		<property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"></property>
 	</bean>
 	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean>
+	
 	<mybatis-spring:scan base-package="com.mayer.mybatis.crud.dao"/>
 
 </beans>
