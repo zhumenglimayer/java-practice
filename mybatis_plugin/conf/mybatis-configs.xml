@@ -25,6 +25,7 @@
 			<property name="user" value="root"/>
 			<property name="password" value="123"/>
 		</plugin>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
 	</plugins>
 	
 	<environments default="development">

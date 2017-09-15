@@ -17,6 +17,8 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.mayer.mybatis.crud.beans.Employee;
 import com.mayer.mybatis.crud.beans.EmployeeExample;
 import com.mayer.mybatis.crud.beans.EmployeeExample.Criteria;
@@ -37,9 +39,20 @@ public class MybatisTest {
 		SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		try {
-			EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+			/*EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
 			Employee emp = employeeMapper.selectByPrimaryKey(1);
-			System.out.println(emp.getLastName());
+			System.out.println(emp.getLastName());*/
+			
+			EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+			Page<Object> page = PageHelper.startPage(2, 5);
+			List<Employee> emps = employeeMapper.selectByExample(null);
+			for (Employee employee : emps) {
+				System.out.println(employee.getLastName());
+			}
+			System.out.println(page.getPageNum());
+			System.out.println(page.getTotal());
+			System.out.println(page.getPages());
+			
 		} finally {
 			sqlSession.close();
 		}
