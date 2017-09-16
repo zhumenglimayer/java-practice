@@ -8,5 +8,20 @@
 </head>
 <body>
 	<a href="helloworld">Hello World!!!!</a>
+	<br/>
+	<br/>
+	<a href="springmvc/testRequestMapping">Test RequestMapping</a>
+	<br/>
+	<br/>
+	<a href="springmvc/testMethod">Test Method</a>
+	<br/>
+	<br/>
+	<form action="springmvc/testMethod" method="post">
+		<input type="submit" value="submit"/>
+	</form>
+	<br/>
+	<br/>
+	<a href="springmvc/testPathVariable/2/jerry">Test PathVariable</a>
+	
 </body>
 </html>
