@@ -136,7 +136,7 @@ public class SpringMVCTest {
 		if(id != null){
 			User user = new User("1", "Tom", "123456", "Tom@163.com", "1", 12);
 			System.out.println("从数据库取得的数据：" + user);
-			map.put("use", user);
+			map.put("user", user);
 		}
 	}
 	
@@ -144,5 +144,17 @@ public class SpringMVCTest {
 	public String testModelAttribute(User user){
 		System.out.println("修改后的:" + user);
 		return "success";
+	}
+	
+	@RequestMapping("/testBeanView")
+	public String testBeanView(){
+		System.out.println("testBeanView....");
+		return "helloView";
+	}
+	
+	@RequestMapping("/testRedirect")
+	public String testRedirect(){
+		System.out.println("testRedirect....");
+		return "redirect:/index.jsp";
 	}
 }
