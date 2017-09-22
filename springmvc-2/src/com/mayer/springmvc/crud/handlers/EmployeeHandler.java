@@ -1,5 +1,6 @@
 package com.mayer.springmvc.crud.handlers;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mayer.springmvc.crud.dao.DepartmentDao;
 import com.mayer.springmvc.crud.dao.EmployeeDao;
@@ -83,5 +85,11 @@ public class EmployeeHandler {
 	public void testInitBinder(WebDataBinder binder){
 		binder.setDisallowedFields("lastName");
 	}*/
+	
+	@ResponseBody
+	@RequestMapping("/testJson")
+	public Collection<Employee> testJson(){
+		return employeeDao.getAll();
+	}
 	
 }

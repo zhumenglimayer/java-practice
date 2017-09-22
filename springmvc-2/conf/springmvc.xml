@@ -22,4 +22,11 @@
 			</set>
 		</property>
 	</bean> -->
+	<mvc:interceptors>
+		<bean class="com.mayer.springmvc.crud.interceptor.MyFirstInterceptor"></bean>
+		<mvc:interceptor>
+			<mvc:mapping path="/getEmps"/>
+			<bean class="com.mayer.springmvc.crud.interceptor.SecondInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
