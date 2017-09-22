@@ -28,5 +28,7 @@
 	<a href="getEmps">List All Employees!!!</a>
 	<br/>
 	<a href="testJson" id="testJson">Test Json</a>
+	<br/>
+	<a href="testExceptionHandler?i=10">Test ExceptionHandler</a>
 </body>
 </html>
