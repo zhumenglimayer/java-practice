@@ -29,4 +29,12 @@
 			<bean class="com.mayer.springmvc.crud.interceptor.SecondInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.ArrayIndexOutOfBoundsException">error</prop>
+			</props>
+		</property>
+	</bean>
 </beans>

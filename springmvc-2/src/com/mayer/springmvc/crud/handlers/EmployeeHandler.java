@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mayer.springmvc.crud.dao.DepartmentDao;
 import com.mayer.springmvc.crud.dao.EmployeeDao;
 import com.mayer.springmvc.crud.entities.Employee;
+import com.mayer.springmvc.crud.exception.UserNameNotMatchPasswordException;
 
 @Controller
 public class EmployeeHandler {
@@ -115,5 +118,22 @@ public class EmployeeHandler {
 //		mv.addObject("exception", ex);
 //		return mv;
 //	}
+	
+	@ResponseStatus(value=HttpStatus.NOT_IMPLEMENTED, reason="`````0.0")
+	@RequestMapping("/testResponseStatusExceptionResolver")
+	public String testResponseStatusExceptionResolver(@RequestParam("i") int i){
+		if(i == 1){
+			throw new UserNameNotMatchPasswordException();
+		}
+		System.out.println("testResponseStatusExceptionResolver....");
+		return "success";
+	}
+	
+	@RequestMapping("/testSimpleMappingException")
+	public String testSimpleMappingException(@RequestParam("i") int i){
+		String[] args =new String[10];
+		System.out.println("testSimpleMappingException...." + args[i]);
+		return "success";
+	}
 	
 }

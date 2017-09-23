@@ -30,5 +30,9 @@
 	<a href="testJson" id="testJson">Test Json</a>
 	<br/>
 	<a href="testExceptionHandler?i=10">Test ExceptionHandler</a>
+	<br/>
+	<a href="testResponseStatusExceptionResolver?i=10">Test ResponseStatusExceptionResolver</a>
+	<br/>
+	<a href="testSimpleMappingException?i=2">Test SimpleMappingException</a>
 </body>
 </html>
