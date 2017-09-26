@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	window.onload = function(){
-		alert("aaa");
-		document.getElementsByTagName("a")[0].onclick() = function(){
-			alert("aaa");
+		/* alert("aaa"); */
+		document.getElementsByTagName("a")[0].onclick = function(){
+			/* alert("aaa"); */
 			var request = new XMLHttpRequest();
 			var url = this.href;
 			var method = "GET";
@@ -17,7 +17,7 @@
 			request.send(null);
 			request.onreadystatechange = function(){
 				
-				alert(request.readyState);
+				/* alert(request.readyState); */
 				if(request.readyState==4){
 					if(request.status==200 || request.status==304){
 						alert(request.responseText);

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var aNodes = document.getElementsByTagName("a");
+		for(var i = 0; i < aNodes.length; i++){
+			aNodes[i].onclick = function(){
+				var url = this.href;
+				var method = "GET";
+				var request = new XMLHttpRequest();
+				request.open(method, url);
+				request.send(null);
+				request.onreadystatechange = function(){
+					if(request.readyState == 4){
+						if(request.status = 200 || request.status == 304){
+							document.getElementById("outview").innerHTML = request.responseText;
+						}
+					}
+				}
+				return false;
+		}
+		
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>Test Return HTML</h1>
+	<a href="test01.html">Test01</a>
+	<a href="test02.html">Test02</a>
+	<a href="test03.html">Test03</a>
+	<div id="outview"></div>
+</body>
+</html>

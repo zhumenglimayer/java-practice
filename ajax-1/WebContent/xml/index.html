@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var aNodes = document.getElementsByTagName("a");
+		for(var i = 0; i < aNodes.length; i++){
+			aNodes[i].onclick = function(){
+				var url = this.href;
+				var method = "GET";
+				var request = new XMLHttpRequest();
+				request.open(method, url);
+				request.send(null);
+				request.onreadystatechange = function(){
+					if(request.readyState == 4){
+						if(request.status = 200 || request.status == 304){
+							var result = request.responseXML;
+							var name = result.getElementsByTagName("name")[0].firstChild.nodeValue;
+							var email = result.getElementsByTagName("email")[0].firstChild.nodeValue;
+							var website = result.getElementsByTagName("website")[0].firstChild.nodeValue;
+							var aNode = document.createElement("a");
+							aNode.appendChild(document.createTextNode(name));
+							aNode.href = "mailto:" + email;
+							
+							var h2Node = document.createElement("h2");
+							h2Node.appendChild(aNode);
+							
+							var aNode2 = document.createElement("a");
+							aNode2.appendChild(document.createTextNode(website));
+							aNode2.href = website;
+							
+							var detailNode = document.getElementById("outview");
+							detailNode.innerHTML = "";
+							detailNode.appendChild(h2Node);
+							detailNode.appendChild(aNode2);
+						}
+					}
+				}
+				return false;
+		}
+		
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>Test Return XML</h1>
+	<a href="test01.xml">Test01</a>
+	<a href="test02.xml">Test02</a>
+	<a href="test03.xml">Test03</a>
+	<div id="outview"></div>
+</body>
+</html>
