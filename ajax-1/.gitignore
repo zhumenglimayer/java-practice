@@ -3,6 +3,7 @@
 /target/
 /WebContent/WEB-INF/lib/
 /WebContent/META-INF/
+/WebContent/scripts/
   
 # built application files  
 *.apk  

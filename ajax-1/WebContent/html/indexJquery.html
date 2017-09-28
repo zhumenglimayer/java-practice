@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../scripts/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("a").click(function(){
+			var url = this.href /* + " h2 a" */;
+			var args = {"time": new Date()};
+			$("#outview").load(url,args);
+			return false;
+		})
+	})
+</script>
+</head>
+<body>
+	<h1>Test Return HTML</h1>
+	<a href="test01.html">Test01</a>
+	<a href="test02.html">Test02</a>
+	<a href="test03.html">Test03</a>
+	<div id="outview"></div>
+</body>
+</html>
