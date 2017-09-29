@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../scripts/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("a").click(function(){
+		var url = this.href;
+		var args = {"time": new Date()};
+		
+		/* $.getJSON(url,args,function(data){
+			var name = data.person.name;
+			var email = data.person.email;
+			var website = data.person.website;
+			$("#outview").empty().append("<h2><a href='mailto:" + email +"'>" + name +"</a></h2>")
+								 .append("<a href'" + website + "'>" + website + "</a>");
+		})  */
+		
+		$.post(url,args,function(data){
+			var name = data.person.name;
+			var email = data.person.email;
+			var website = data.person.website;
+		$("#outview").empty().append("<h2><a href='mailto:" + email +"'>" + name +"</a></h2>")
+							 .append("<a href'" + website + "'>" + website + "</a>");
+		},"JSON")
+		return false;
+	})
+})
+</script>
+</head>
+<body>
+	<h1>Test Return JSON</h1>
+	<a href="test01.js">Test01</a>
+	<a href="test02.js">Test02</a>
+	<a href="test03.js">Test03</a>
+	<div id="outview"></div>
+</body>
+</html>
