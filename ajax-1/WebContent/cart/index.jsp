@@ -8,7 +8,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/scripts/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		var isHasCart = "${sessionScope.sc==null}";
+		if(isHasCart=="true"){
+			$("#cartView").hide();
+		}else{
+			$("#cartView").show();
+			$("#bookName").text("${sessionScope.sc.bookName}");
+			$("#totalNumber").text("${sessionScope.sc.totalNumber}");
+			$("#totalMoney").text("${sessionScope.sc.totalMoney}"); 
+		}
 		$("a").click(function(){
+			$("#cartView").show();
 			var url = this.href;
 			var args = {"time":new Date()};
 			$.getJSON(url,args,function(data){
@@ -23,10 +33,11 @@
 </head>
 <body>
 
+	<div id="cartView">
 	您已经将 &nbsp;<span id="bookName"></span>&nbsp; 加入到购物车中。
 	购物车中的书有 &nbsp;<span id="totalNumber"></span>&nbsp; 本。
 	总价格 &nbsp;<span id="totalMoney"></span>&nbsp; 人民币。
-
+	</div>
 	<br/>
 	Java&nbsp;&nbsp;<a href="${pageContext.request.contextPath }/addToCart?id=java&price=100">加入购物车</a>
 	<br/>

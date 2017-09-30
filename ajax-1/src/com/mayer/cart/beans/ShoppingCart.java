@@ -6,7 +6,9 @@ import java.util.Map;
 public class ShoppingCart {
 	private Map<String, ShoppingCartItem> items = new HashMap<String, ShoppingCartItem>();
 	
+	private String bookName;
 	public void addToCart(String bookName, int price){
+		this.bookName = bookName;
 		if(items.containsKey(bookName)){
 			ShoppingCartItem item = items.get(bookName);
 			item.setNumber(item.getNumber() + 1);
@@ -20,6 +22,9 @@ public class ShoppingCart {
 		}
 	}
 	
+	public String getBookName() {
+		return bookName;
+	}
 	public int getTotalNumber(){
 		int total = 0;
 		for (ShoppingCartItem item : items.values()) {
