@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mayer.cart.beans.ShoppingCart;
 
 /**
@@ -32,17 +33,18 @@ public class AddToCart extends HttpServlet {
 		}
 		sc.addToCart(bookName, price);
 		
-		StringBuilder result = new StringBuilder();
-		result.append("{")
-			  .append("\"bookName\":\"" + bookName + "\"")
-			  .append(",")
-			  .append("\"totalNumber\":" + sc.getTotalNumber())
-			  .append(",")
-			  .append("\"totalMoney\":" + sc.getTotalMoney())
-			  .append("}");
+//		StringBuilder result = new StringBuilder();
+//		result.append("{")
+//			  .append("\"bookName\":\"" + bookName + "\"")
+//			  .append(",")
+//			  .append("\"totalNumber\":" + sc.getTotalNumber())
+//			  .append(",")
+//			  .append("\"totalMoney\":" + sc.getTotalMoney())
+//			  .append("}");
 		
+		ObjectMapper mapper = new ObjectMapper();
 		response.setContentType("text/javascript");
-		response.getWriter().print(result);
+		response.getWriter().print(mapper.writeValueAsString(sc));
 	}
 
 	/**
