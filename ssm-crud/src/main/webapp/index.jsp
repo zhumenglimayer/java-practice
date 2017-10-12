@@ -53,23 +53,30 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">当前页，总共页，总共条记录</div>
-			<div class="col-md-6"></div>
+			<div class="col-md-6" id="page_info_area"></div>
+			<div class="col-md-6" id="page_nav_area"></div>
 		</div>
 	</div>
 	<script type="text/javascript">
 		$(function() {
+			to_page(1);
+		});
+		
+		function to_page(pn){
 			$.ajax({
 				url : "${APP_PATH }/emps",
-				data : "pn=1",
+				data : "pn="+pn,
 				type : "GET",
 				success : function(result) {
 					buildEmpsTable(result);
+					buildPageInfo(result);
+					buildPageNav(result);
 				}
 			});
-		});
+		}
 
 		function buildEmpsTable(result) {
+			$("#emps_table tbody").empty();
 			var emps = result.extend.pageInfo.list;
 			$.each(emps,function(index,item){
 				var empIdTd = $("<td></td>").append(item.empId);
@@ -89,8 +96,58 @@
 				.append(btnTd).appendTo("#emps_table tbody");
 			});
 		}
-		function buildPageNav() {
-
+		function buildPageInfo(result) {
+			$("#page_info_area").empty();
+			$("#page_info_area").append("当前" +result.extend.pageInfo.pageNum+ "页，总共" +result.extend.pageInfo.pages+ "页，总共" +result.extend.pageInfo.total+ "条记录")
+		}
+		function buildPageNav(result) {
+			$("#page_nav_area").empty();
+			var ul = $("<ul></ul>").addClass("pagination");
+			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
+			var prePageLi = $("<li></li>").append($("<a></a>").append($("<span></span>").append("&laquo;")).attr("href","#"));
+			if(!result.extend.pageInfo.hasPreviousPage){
+				firstPageLi.addClass("disabled");
+				prePageLi.addClass("disabled");
+			}else{
+				firstPageLi.click(function(){
+					to_page(1);
+				});
+				
+				prePageLi.click(function(){
+					to_page(result.extend.pageInfo.pageNum-1);
+				});
+			}
+			
+			
+			var nextPageLi = $("<li></li>").append($("<a></a>").append($("<span></span>").append("&raquo;")).attr("href","#"));
+			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
+			
+			
+			if(!result.extend.pageInfo.hasNextPage){
+				nextPageLi.addClass("disabled");
+				lastPageLi.addClass("disabled");
+			}else{
+				nextPageLi.click(function(){
+					to_page(result.extend.pageInfo.pageNum+1);
+				});
+				
+				lastPageLi.click(function(){
+					to_page(result.extend.pageInfo.pages);
+				});
+			}
+			ul.append(firstPageLi).append(prePageLi);
+			$.each(result.extend.pageInfo.navigatepageNums,function(index,item){
+				var numPageLi = $("<li></li>").append($("<a></a>").append(item).attr("href","#"));
+				if(result.extend.pageInfo.pageNum==item){
+					numPageLi.addClass("active");
+				}
+				numPageLi.click(function(){
+					to_page(item);
+				});
+				ul.append(numPageLi);
+			});
+			ul.append(nextPageLi).append(lastPageLi);
+			$("<nav></nav>").append(ul).appendTo("#page_nav_area");
 		}
 	</script>
 </body>
