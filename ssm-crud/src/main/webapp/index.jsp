@@ -21,6 +21,60 @@
 
 </head>
 <body>
+	<!-- 员工新增模态框 -->
+	<div class="modal fade" id="empAddModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">员工添加</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="emp_add_input" class="col-sm-2 control-label">empName</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="empName"
+									id="emp_add_input" placeholder="Email">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="email_add_input" class="col-sm-2 control-label">email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" name="email"
+									id="email_add_input" placeholder="Email@163.com">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">gender</label>
+							<div class="col-sm-10">
+								<label class="radio-inline"> <input type="radio"
+									name="gender" id="gender1_add_input" value="M" checked="checked"> 男
+								</label> <label class="radio-inline"> <input type="radio"
+									name="gender" id="gender2_add_input" value="F"> 女
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">deptName</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="dId" id="depts_add_input">
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="emp_add_save">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -29,7 +83,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-8">
-				<button class="btn btn-primary">新增</button>
+				<button class="btn btn-primary" id="emp_add_modal">新增</button>
 				<button class="btn btn-danger">删除</button>
 			</div>
 		</div>
@@ -47,7 +101,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					
+
 					</tbody>
 				</table>
 			</div>
@@ -58,14 +112,15 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		var totalRec;
 		$(function() {
 			to_page(1);
 		});
-		
-		function to_page(pn){
+
+		function to_page(pn) {
 			$.ajax({
 				url : "${APP_PATH }/emps",
-				data : "pn="+pn,
+				data : "pn=" + pn,
 				type : "GET",
 				success : function(result) {
 					buildEmpsTable(result);
@@ -78,70 +133,86 @@
 		function buildEmpsTable(result) {
 			$("#emps_table tbody").empty();
 			var emps = result.extend.pageInfo.list;
-			$.each(emps,function(index,item){
+			$.each(emps, function(index, item) {
 				var empIdTd = $("<td></td>").append(item.empId);
 				var empNameTd = $("<td></td>").append(item.empName);
-				var genderTd = $("<td></td>").append(item.gender=="M"?"男":"女");
+				var genderTd = $("<td></td>").append(
+						item.gender == "M" ? "男" : "女");
 				var emailTd = $("<td></td>").append(item.email);
-				var deptNameTd = $("<td></td>").append(item.department.deptName);
-				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm")
-				.append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
-				.append("編輯");
-				var deleteBtn =$("<button></button>").addClass("btn btn-danger btn-sm")
-				.append($("<span></span>").addClass("glyphicon glyphicon-trash"))
-				.append("刪除");
-				var btnTd = $("<td></td>").append(editBtn).append(" ").append(deleteBtn);
-				$("<tr></tr>").append(empIdTd).append(empNameTd)
-				.append(genderTd).append(emailTd).append(deptNameTd)
-				.append(btnTd).appendTo("#emps_table tbody");
+				var deptNameTd = $("<td></td>")
+						.append(item.department.deptName);
+				var editBtn = $("<button></button>").addClass(
+						"btn btn-primary btn-sm").append(
+						$("<span></span>").addClass(
+								"glyphicon glyphicon-pencil")).append("編輯");
+				var deleteBtn = $("<button></button>").addClass(
+						"btn btn-danger btn-sm").append(
+						$("<span></span>")
+								.addClass("glyphicon glyphicon-trash")).append(
+						"刪除");
+				var btnTd = $("<td></td>").append(editBtn).append(" ").append(
+						deleteBtn);
+				$("<tr></tr>").append(empIdTd).append(empNameTd).append(
+						genderTd).append(emailTd).append(deptNameTd).append(
+						btnTd).appendTo("#emps_table tbody");
 			});
 		}
 		function buildPageInfo(result) {
 			$("#page_info_area").empty();
-			$("#page_info_area").append("当前" +result.extend.pageInfo.pageNum+ "页，总共" +result.extend.pageInfo.pages+ "页，总共" +result.extend.pageInfo.total+ "条记录")
+			$("#page_info_area").append(
+					"当前" + result.extend.pageInfo.pageNum + "页，总共"
+							+ result.extend.pageInfo.pages + "页，总共"
+							+ result.extend.pageInfo.total + "条记录")
+			totalRec = result.extend.pageInfo.total;
 		}
 		function buildPageNav(result) {
 			$("#page_nav_area").empty();
 			var ul = $("<ul></ul>").addClass("pagination");
-			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
-			var prePageLi = $("<li></li>").append($("<a></a>").append($("<span></span>").append("&laquo;")).attr("href","#"));
-			if(!result.extend.pageInfo.hasPreviousPage){
+			var firstPageLi = $("<li></li>").append(
+					$("<a></a>").append("首页").attr("href", "#"));
+			var prePageLi = $("<li></li>").append(
+					$("<a></a>").append($("<span></span>").append("&laquo;"))
+							.attr("href", "#"));
+			if (!result.extend.pageInfo.hasPreviousPage) {
 				firstPageLi.addClass("disabled");
 				prePageLi.addClass("disabled");
-			}else{
-				firstPageLi.click(function(){
+			} else {
+				firstPageLi.click(function() {
 					to_page(1);
 				});
-				
-				prePageLi.click(function(){
-					to_page(result.extend.pageInfo.pageNum-1);
+
+				prePageLi.click(function() {
+					to_page(result.extend.pageInfo.pageNum - 1);
 				});
 			}
-			
-			
-			var nextPageLi = $("<li></li>").append($("<a></a>").append($("<span></span>").append("&raquo;")).attr("href","#"));
-			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","#"));
-			
-			
-			if(!result.extend.pageInfo.hasNextPage){
+
+			var nextPageLi = $("<li></li>").append(
+					$("<a></a>").append($("<span></span>").append("&raquo;"))
+							.attr("href", "#"));
+			var lastPageLi = $("<li></li>").append(
+					$("<a></a>").append("末页").attr("href", "#"));
+
+			if (!result.extend.pageInfo.hasNextPage) {
 				nextPageLi.addClass("disabled");
 				lastPageLi.addClass("disabled");
-			}else{
-				nextPageLi.click(function(){
-					to_page(result.extend.pageInfo.pageNum+1);
+			} else {
+				nextPageLi.click(function() {
+					to_page(result.extend.pageInfo.pageNum + 1);
 				});
-				
-				lastPageLi.click(function(){
+
+				lastPageLi.click(function() {
 					to_page(result.extend.pageInfo.pages);
 				});
 			}
 			ul.append(firstPageLi).append(prePageLi);
-			$.each(result.extend.pageInfo.navigatepageNums,function(index,item){
-				var numPageLi = $("<li></li>").append($("<a></a>").append(item).attr("href","#"));
-				if(result.extend.pageInfo.pageNum==item){
+			$.each(result.extend.pageInfo.navigatepageNums, function(index,
+					item) {
+				var numPageLi = $("<li></li>").append(
+						$("<a></a>").append(item).attr("href", "#"));
+				if (result.extend.pageInfo.pageNum == item) {
 					numPageLi.addClass("active");
 				}
-				numPageLi.click(function(){
+				numPageLi.click(function() {
 					to_page(item);
 				});
 				ul.append(numPageLi);
@@ -149,6 +220,39 @@
 			ul.append(nextPageLi).append(lastPageLi);
 			$("<nav></nav>").append(ul).appendTo("#page_nav_area");
 		}
+
+		$("#emp_add_modal").click(function() {
+			getDepts();
+			
+			$('#empAddModal').modal({
+				backdrop : "static"
+			})
+		});
+		
+		function getDepts(){
+			$.ajax({
+				url:"${APP_PATH }/depts",
+				type:"GET",
+				success:function(result){
+					$.each(result.extend.depts,function(){
+						var optionEle = $("<option></option>").append(this.deptName).attr("value",this.deptId);
+						optionEle.appendTo("#depts_add_input");
+					});
+				}
+			});
+		}
+		
+		$("#emp_add_save").click(function(){
+			$.ajax({
+				url:"${APP_PATH }/emp",
+				type:"POST",
+				data:$("#empAddModal form").serialize(),
+				success:function(){
+					$("#empAddModal").modal('hide');
+					to_page(totalRec);
+				}
+			});
+		});
 	</script>
 </body>
 </html>
