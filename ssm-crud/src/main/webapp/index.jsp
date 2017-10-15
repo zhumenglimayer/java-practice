@@ -39,21 +39,24 @@
 							<label for="emp_add_input" class="col-sm-2 control-label">empName</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="empName"
-									id="emp_add_input" placeholder="Email">
+									id="emp_add_input" placeholder="Email"> <span
+									class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="email_add_input" class="col-sm-2 control-label">email</label>
 							<div class="col-sm-10">
 								<input type="email" class="form-control" name="email"
-									id="email_add_input" placeholder="Email@163.com">
+									id="email_add_input" placeholder="Email@163.com"> <span
+									class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">gender</label>
 							<div class="col-sm-10">
 								<label class="radio-inline"> <input type="radio"
-									name="gender" id="gender1_add_input" value="M" checked="checked"> 男
+									name="gender" id="gender1_add_input" value="M"
+									checked="checked"> 男
 								</label> <label class="radio-inline"> <input type="radio"
 									name="gender" id="gender2_add_input" value="F"> 女
 								</label>
@@ -220,34 +223,101 @@
 			ul.append(nextPageLi).append(lastPageLi);
 			$("<nav></nav>").append(ul).appendTo("#page_nav_area");
 		}
+		
+		function reset_form(ele){
+			$(ele)[0].reset();
+			$(ele).find("*").removeClass("has-success has-error");
+			$(ele).find(".help-block").text("");
+		}
 
 		$("#emp_add_modal").click(function() {
+			reset_form("#empAddModal form");
 			getDepts();
-			
 			$('#empAddModal').modal({
 				backdrop : "static"
 			})
 		});
-		
-		function getDepts(){
+
+		function getDepts() {
 			$.ajax({
-				url:"${APP_PATH }/depts",
-				type:"GET",
-				success:function(result){
-					$.each(result.extend.depts,function(){
-						var optionEle = $("<option></option>").append(this.deptName).attr("value",this.deptId);
+				url : "${APP_PATH }/depts",
+				type : "GET",
+				success : function(result) {
+					$.each(result.extend.depts, function() {
+						var optionEle = $("<option></option>").append(
+								this.deptName).attr("value", this.deptId);
 						optionEle.appendTo("#depts_add_input");
 					});
 				}
 			});
 		}
-		
-		$("#emp_add_save").click(function(){
+
+		$("#emp_add_input").change(function() {
+
+			var empName = $("#emp_add_input").val();
 			$.ajax({
-				url:"${APP_PATH }/emp",
-				type:"POST",
-				data:$("#empAddModal form").serialize(),
-				success:function(){
+				url : "${APP_PATH }/checkuser",
+				type : "POST",
+				data : "empName=" + empName,
+				success : function(result) {
+					if (result.code == 100) {
+						showValidateMsg("#emp_add_input", "success", "用户名可用");
+						$("#emp_add_save").attr("ajax-va","success");
+					} else {
+						showValidateMsg("#emp_add_input", "error", result.extend.va_msg);
+						$("#emp_add_save").attr("ajax-va","error");
+					}
+				}
+			});
+		});
+
+		function validateAddForm() {
+			var empName = $("#emp_add_input").val();
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{3,6}$)/;
+			if (!regName.test(empName)) {
+				showValidateMsg("#emp_add_input", "error",
+						"用户名必须为6-16位英文或者3-6位中文");
+				return false;
+			} else {
+				showValidateMsg("#emp_add_input", "success", "");
+			}
+			var email = $("#email_add_input").val();
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+			if (!regEmail.test(email)) {
+				showValidateMsg("#email_add_input", "error", "邮箱格式不正确");
+				return false;
+			} else {
+				showValidateMsg("#email_add_input", "success", "");
+			}
+			return true;
+		}
+
+		function showValidateMsg(ele, status, msg) {
+			$(ele).parent().removeClass("has-success has-error");
+			$(ele).next("span").text("");
+
+			if ("success" == status) {
+				$(ele).parent().addClass("has-success");
+				$(ele).next("span").text(msg);
+			} else if ("error" == status) {
+				$(ele).parent().addClass("has-error");
+				$(ele).next("span").text(msg);
+			}
+		}
+
+		$("#emp_add_save").click(function() {
+			if ($("#emp_add_save").attr("ajax-va") == "error") {
+				return false;
+			}
+			if (!validateAddForm()) {
+				return false;
+			}
+			
+			$.ajax({
+				url : "${APP_PATH }/emp",
+				type : "POST",
+				data : $("#empAddModal form").serialize(),
+				success : function() {
 					$("#empAddModal").modal('hide');
 					to_page(totalRec);
 				}

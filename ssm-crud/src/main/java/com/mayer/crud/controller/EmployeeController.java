@@ -48,4 +48,19 @@ public class EmployeeController {
 		employeeService.saveEmp(employee);
 		return Msg.success();
 	}
+	
+	@ResponseBody
+	@RequestMapping("/checkuser")
+	public Msg checkUser(@RequestParam("empName")String empName){
+		String regx = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{3,6}$)";
+		if(!empName.matches(regx)){
+			return Msg.fail().add("va_msg", "用户名必须为6-16位英文或者3-6位中文");
+		}
+		boolean b = employeeService.hasEmpName(empName);
+		if(b){
+			return Msg.success();
+		}else{
+			return Msg.fail().add("va_msg", "用户名已存在");
+		}
+	}
 }
