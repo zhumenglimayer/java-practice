@@ -78,6 +78,63 @@
 			</div>
 		</div>
 	</div>
+	<!-- 员工修改模态框 -->
+	<div class="modal fade" id="empUpdateModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" >员工修改</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="emp_add_input" class="col-sm-2 control-label">empName</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="empName"
+									id="emp_update_input" placeholder="Email"> <span
+									class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="email_add_input" class="col-sm-2 control-label">email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" name="email"
+									id="email_update_input" placeholder="Email@163.com"> <span
+									class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">gender</label>
+							<div class="col-sm-10">
+								<label class="radio-inline"> <input type="radio"
+									name="gender" id="gender1_update_input" value="M"
+									checked="checked"> 男
+								</label> <label class="radio-inline"> <input type="radio"
+									name="gender" id="gender2_update_input" value="F"> 女
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">deptName</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="dId" id="depts_update_input">
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="emp_update_save">更新</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -145,11 +202,11 @@
 				var deptNameTd = $("<td></td>")
 						.append(item.department.deptName);
 				var editBtn = $("<button></button>").addClass(
-						"btn btn-primary btn-sm").append(
+						"btn btn-primary btn-sm edit_btn").append(
 						$("<span></span>").addClass(
 								"glyphicon glyphicon-pencil")).append("編輯");
 				var deleteBtn = $("<button></button>").addClass(
-						"btn btn-danger btn-sm").append(
+						"btn btn-danger btn-sm delete_btn").append(
 						$("<span></span>")
 								.addClass("glyphicon glyphicon-trash")).append(
 						"刪除");
@@ -232,13 +289,14 @@
 
 		$("#emp_add_modal").click(function() {
 			reset_form("#empAddModal form");
-			getDepts();
+			getDepts("#depts_add_input");
 			$('#empAddModal').modal({
 				backdrop : "static"
-			})
+			});
 		});
 
-		function getDepts() {
+		function getDepts(ele) {
+			$(ele).empty();
 			$.ajax({
 				url : "${APP_PATH }/depts",
 				type : "GET",
@@ -246,7 +304,7 @@
 					$.each(result.extend.depts, function() {
 						var optionEle = $("<option></option>").append(
 								this.deptName).attr("value", this.deptId);
-						optionEle.appendTo("#depts_add_input");
+						optionEle.appendTo(ele);
 					});
 				}
 			});
@@ -309,18 +367,35 @@
 			if ($("#emp_add_save").attr("ajax-va") == "error") {
 				return false;
 			}
-			if (!validateAddForm()) {
+			 if (!validateAddForm()) {
 				return false;
-			}
+			} 
 			
 			$.ajax({
 				url : "${APP_PATH }/emp",
 				type : "POST",
 				data : $("#empAddModal form").serialize(),
-				success : function() {
-					$("#empAddModal").modal('hide');
-					to_page(totalRec);
+				success : function(result) {
+					if(result.code==100){
+						$("#empAddModal").modal('hide');
+						to_page(totalRec);
+					}else{
+						if(undefined!=result.extend.errorFileds.empName){
+							showValidateMsg("#emp_add_input", "error", result.extend.errorFileds.empName);
+						}
+						if(undefined!=result.extend.errorFileds.email){
+							showValidateMsg("#email_add_input", "error", result.extend.errorFileds.email);
+						}
+					}
+					
 				}
+			});
+		});
+		
+		$(document).on("click",".edit_btn",function(){
+			getDepts("#empUpdateModal select");
+			$('#empUpdateModal').modal({
+				backdrop : "static"
 			});
 		});
 	</script>

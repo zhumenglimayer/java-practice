@@ -1,10 +1,16 @@
 package com.mayer.crud.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,9 +50,20 @@ public class EmployeeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/emp",method=RequestMethod.POST)
-	public Msg addEmp(Employee employee){
-		employeeService.saveEmp(employee);
-		return Msg.success();
+	public Msg addEmp(@Valid Employee employee,BindingResult bindingResult){
+		if(bindingResult.hasErrors()){
+			Map<String, Object> map = new HashMap<>();
+			List<FieldError> errors = bindingResult.getFieldErrors();
+			for (FieldError fieldError : errors) {
+				map.put(fieldError.getField(), fieldError.getDefaultMessage());
+				
+			}
+			return Msg.fail().add("errorFileds", map);
+		}else{
+			employeeService.saveEmp(employee);
+			return Msg.success();
+		}
+		
 	}
 	
 	@ResponseBody
