@@ -95,9 +95,7 @@
 						<div class="form-group">
 							<label for="emp_add_input" class="col-sm-2 control-label">empName</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="empName"
-									id="emp_update_input" placeholder="Email"> <span
-									class="help-block"></span>
+								<p class="form-control-static" id="empName_update_static"></p>
 							</div>
 						</div>
 						<div class="form-group">
@@ -173,6 +171,7 @@
 	</div>
 	<script type="text/javascript">
 		var totalRec;
+		var currentPage;
 		$(function() {
 			to_page(1);
 		});
@@ -205,6 +204,7 @@
 						"btn btn-primary btn-sm edit_btn").append(
 						$("<span></span>").addClass(
 								"glyphicon glyphicon-pencil")).append("編輯");
+				editBtn.attr("edit-id",item.empId);
 				var deleteBtn = $("<button></button>").addClass(
 						"btn btn-danger btn-sm delete_btn").append(
 						$("<span></span>")
@@ -224,6 +224,7 @@
 							+ result.extend.pageInfo.pages + "页，总共"
 							+ result.extend.pageInfo.total + "条记录")
 			totalRec = result.extend.pageInfo.total;
+			currentPage = result.extend.pageInfo.pageNum;
 		}
 		function buildPageNav(result) {
 			$("#page_nav_area").empty();
@@ -394,8 +395,45 @@
 		
 		$(document).on("click",".edit_btn",function(){
 			getDepts("#empUpdateModal select");
+			buildEmpUpdateModal($(this).attr("edit-id"));
+			$("#emp_update_save").attr("edit-id",$(this).attr("edit-id"));
 			$('#empUpdateModal').modal({
 				backdrop : "static"
+			});
+		});
+		
+		function buildEmpUpdateModal(id){
+			$.ajax({
+				url:"${APP_PATH }/emp/"+id,
+				type:"GET",
+				success:function(result){
+					var empData = result.extend.emp;
+					$("#empName_update_static").text(empData.empName);
+					$("#email_update_input").val(empData.email);
+					$("#empUpdateModal input[name=gender]").val([empData.gender]);
+					$("#empUpdateModal select").val([empData.dId]);
+				}
+			});
+		}
+		
+		$("#emp_update_save").click(function(){
+			var email = $("#email_update_input").val();
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+			if (!regEmail.test(email)) {
+				showValidateMsg("#email_update_input", "error", "邮箱格式不正确");
+				return false;
+			} else {
+				showValidateMsg("#email_update_input", "success", "");
+			}
+			
+			$.ajax({
+				url:"${APP_PATH }/emp/"+$("#emp_update_save").attr("edit-id"),
+				type:"PUT",
+				data:$("#empUpdateModal form").serialize(),
+				success:function(result){
+					$("#empUpdateModal").modal('hide');
+					to_page(currentPage);
+				}
 			});
 		});
 	</script>
