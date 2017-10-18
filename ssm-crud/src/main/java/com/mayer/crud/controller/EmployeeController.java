@@ -1,5 +1,6 @@
 package com.mayer.crud.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,24 @@ public class EmployeeController {
 	@RequestMapping(value="/emp/{empId}",method=RequestMethod.PUT)
 	public Msg updateEmp(Employee employee){
 		employeeService.updateEmp(employee);
+		return Msg.success();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/emp/{ids}",method=RequestMethod.DELETE)
+	public Msg deleteEmp(@PathVariable("ids")String ids){
+		if(ids.contains("-")){
+			List<Integer> del_ids = new ArrayList<>();
+			String[] str_ids = ids.split("-");
+			for (String string : str_ids) {
+				del_ids.add(Integer.parseInt(string));
+			}
+			employeeService.deleteEmpsByBatch(del_ids);
+		}else{
+			Integer id = Integer.parseInt(ids);
+			employeeService.deleteEmpById(id);
+		}
+		
 		return Msg.success();
 	}
 }

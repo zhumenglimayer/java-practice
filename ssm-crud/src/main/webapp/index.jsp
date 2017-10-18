@@ -142,7 +142,7 @@
 		<div class="row">
 			<div class="col-md-4 col-md-offset-8">
 				<button class="btn btn-primary" id="emp_add_modal">新增</button>
-				<button class="btn btn-danger">删除</button>
+				<button class="btn btn-danger" id="emp_delete_all">删除</button>
 			</div>
 		</div>
 		<div class="row">
@@ -150,6 +150,7 @@
 				<table class="table table-hover" id="emps_table">
 					<thead>
 						<tr>
+							<th><input type="checkbox" id="checkbox_all"/></th>
 							<th>#</th>
 							<th>empName</th>
 							<th>gender</th>
@@ -193,6 +194,7 @@
 			$("#emps_table tbody").empty();
 			var emps = result.extend.pageInfo.list;
 			$.each(emps, function(index, item) {
+				var checkBoxTd = $("<td></td>").append($("<input type='checkbox' class='checkboxs'/>"));
 				var empIdTd = $("<td></td>").append(item.empId);
 				var empNameTd = $("<td></td>").append(item.empName);
 				var genderTd = $("<td></td>").append(
@@ -210,9 +212,10 @@
 						$("<span></span>")
 								.addClass("glyphicon glyphicon-trash")).append(
 						"刪除");
+				deleteBtn.attr("del-id",item.empId);
 				var btnTd = $("<td></td>").append(editBtn).append(" ").append(
 						deleteBtn);
-				$("<tr></tr>").append(empIdTd).append(empNameTd).append(
+				$("<tr></tr>").append(checkBoxTd).append(empIdTd).append(empNameTd).append(
 						genderTd).append(emailTd).append(deptNameTd).append(
 						btnTd).appendTo("#emps_table tbody");
 			});
@@ -402,6 +405,21 @@
 			});
 		});
 		
+		$(document).on("click",".delete_btn",function(){
+			var empName = $(this).parents("tr").find("td:eq(2)").text();
+			var empId = $(this).attr("del-id");
+			if(confirm("是否删除【"+empName+"】的数据")){
+				$.ajax({
+					url:"${APP_PATH }/emp/"+empId,
+					type:"DELETE",
+					success:function(result){
+						alert(result.msg);
+						to_page(currentPage);
+					}
+				});
+			}
+		});
+		
 		function buildEmpUpdateModal(id){
 			$.ajax({
 				url:"${APP_PATH }/emp/"+id,
@@ -435,6 +453,36 @@
 					to_page(currentPage);
 				}
 			});
+		});
+		
+		$("#checkbox_all").click(function(){
+			$(".checkboxs").prop("checked",$("#checkbox_all").prop("checked"));
+		});
+		
+		$(document).on("click",".checkboxs",function(){
+			var flag = $(".checkboxs:checked").length==$(".checkboxs").length;
+			$("#checkbox_all").prop("checked",flag);
+		});
+		
+		$("#emp_delete_all").click(function(){
+			var empNames = "";
+			var del_ids = "";
+			$.each($(".checkboxs:checked"),function(){
+				empNames += $(this).parents("tr").find("td:eq(2)").text()+",";
+				del_ids += $(this).parents("tr").find("td:eq(1)").text()+"-";
+			});
+			empNames = empNames.substring(0,empNames.length-1);
+			del_ids = del_ids.substring(0,del_ids.length-1);
+			if(confirm("确认删除【"+empNames+"】吗？")){
+				$.ajax({
+					url:"${APP_PATH }/emp/"+del_ids,
+					type:"DELETE",
+					success:function(result){
+						alert(result.msg);
+						to_page(currentPage);
+					}
+				});
+			}
 		});
 	</script>
 </body>
