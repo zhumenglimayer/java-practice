@@ -6,8 +6,20 @@ public class Successkilled extends SuccesskilledKey {
     private Byte state;
 
     private Date createTime;
+    
+    private Seckill seckill;
+    
+    
 
-    public Byte getState() {
+    public Seckill getSeckill() {
+		return seckill;
+	}
+
+	public void setSeckill(Seckill seckill) {
+		this.seckill = seckill;
+	}
+
+	public Byte getState() {
         return state;
     }
 
