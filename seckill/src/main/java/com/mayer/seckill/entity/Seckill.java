@@ -14,8 +14,16 @@ public class Seckill {
     private Date startTime;
 
     private Date endTime;
+    
+    
 
-    public Long getSeckillId() {
+    @Override
+	public String toString() {
+		return "Seckill [seckillId=" + seckillId + ", name=" + name + ", number=" + number + ", createTime="
+				+ createTime + ", startTime=" + startTime + ", endTime=" + endTime + "]";
+	}
+
+	public Long getSeckillId() {
         return seckillId;
     }
 

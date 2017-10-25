@@ -49,7 +49,7 @@
 	
 	<!--配置扫描器，将Mybatis接口的实现加入到IOC容器中  -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="sqlSessionFactoryBeanName" ref="sqlSessionFactory"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 		<!--扫描所有dao接口的实现，加入到IOC容器中  -->
 		<property name="basePackage" value="com.mayer.seckill.dao"></property>
 	</bean>

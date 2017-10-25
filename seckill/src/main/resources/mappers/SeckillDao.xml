@@ -20,7 +20,7 @@
 		seckill_id,name,number,start_time,end_time,create_time
 		from
 		seckill
-		where seclikk_id=#{seckillId}
+		where seckill_id=#{seckillId}
 	</select>
 
 	<select id="queryAll" resultType="Seckill">

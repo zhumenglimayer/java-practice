@@ -34,4 +34,10 @@ public class Successkilled extends SuccesskilledKey {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+    
+    
+
+	
+    
+    
 }

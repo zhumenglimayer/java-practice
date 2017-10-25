@@ -2,6 +2,9 @@ package com.mayer.seckill.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -24,20 +27,24 @@ public class SeckillDaoTest {
 	
 	@Test
 	public void testReduceNumber() throws Exception{
-		
+		Date killTime = new Date();
+		int updatecount = seckillDao.reduceNumber(1L, killTime);
+		System.out.println("Updatecount=" + updatecount);
 	}
 	
 	@Test
 	public void testQueryById() throws Exception{
-		System.out.println(seckillDao);
-//		long id = 1000;
-//		Seckill seckill = seckillDao.queryById(id);
-//		System.out.println(seckill.getName());
-//		System.out.println(seckill);
+		long id = 1;
+		Seckill seckill = seckillDao.queryById(id);
+		System.out.println(seckill.getName());
+		System.out.println(seckill);
 	}
 	
 	@Test
 	public void testQueryAll() throws Exception{
-		
+		List<Seckill> seckills = seckillDao.queryAll(0, 100);
+		for (Seckill seckill : seckills) {
+			System.out.println(seckill);
+		}
 	}
 }
