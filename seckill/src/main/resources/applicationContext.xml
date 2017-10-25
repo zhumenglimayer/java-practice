@@ -15,6 +15,7 @@
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
+	<context:component-scan base-package="com.mayer.seckill"></context:component-scan>
 	<context:property-placeholder location="classpath:db.properties"/>
 	<!--数据库连接池  -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
