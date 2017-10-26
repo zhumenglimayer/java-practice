@@ -20,4 +20,11 @@ public class SuccesskilledKey {
     public void setUserPhone(Long userPhone) {
         this.userPhone = userPhone;
     }
+
+	@Override
+	public String toString() {
+		return "seckillId=" + seckillId + ", userPhone=" + userPhone ;
+	}
+    
+    
 }

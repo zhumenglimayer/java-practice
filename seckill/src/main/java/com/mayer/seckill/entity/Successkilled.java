@@ -34,6 +34,11 @@ public class Successkilled extends SuccesskilledKey {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	@Override
+	public String toString() {
+		return "Successkilled ["+super.toString()+",state=" + state + ", createTime=" + createTime + ", seckill=" + seckill + "]";
+	}
     
     
 
