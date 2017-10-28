@@ -14,8 +14,9 @@ public class Exposer {
 		this.md5 = md5;
 		this.seckillId = seckillId;
 	}
-	public Exposer(boolean expo, long now, long start, long end) {
+	public Exposer(boolean expo, long seckillId, long now, long start, long end) {
 		super();
+		this.seckillId = seckillId;
 		this.expo = expo;
 		this.now = now;
 		this.start = start;
