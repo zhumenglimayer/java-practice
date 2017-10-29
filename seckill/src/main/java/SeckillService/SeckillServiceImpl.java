@@ -13,6 +13,7 @@ import com.mayer.seckill.dto.Exposer;
 import com.mayer.seckill.dto.SeckillExcution;
 import com.mayer.seckill.entity.Seckill;
 import com.mayer.seckill.entity.Successkilled;
+import com.mayer.seckill.enums.SeckillStateEnum;
 import com.mayer.seckill.exception.RepeatKillException;
 import com.mayer.seckill.exception.SeckillCloseException;
 import com.mayer.seckill.exception.SeckillException;
@@ -77,7 +78,7 @@ public class SeckillServiceImpl implements SeckillService {
 					throw new RepeatKillException("seckill repeated");
 				} else {
 					Successkilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
-					return new SeckillExcution(seckillId, 1, "秒杀成功", successKilled);
+					return new SeckillExcution(seckillId, SeckillStateEnum.SUCCESS, successKilled);
 				}
 			}
 		} catch (SeckillCloseException e1) {

@@ -1,6 +1,7 @@
 package com.mayer.seckill.dto;
 
 import com.mayer.seckill.entity.Successkilled;
+import com.mayer.seckill.enums.SeckillStateEnum;
 
 //封装执行后结果
 public class SeckillExcution {
@@ -45,19 +46,19 @@ public class SeckillExcution {
 		this.successkilled = successkilled;
 	}
 
-	public SeckillExcution(long seckillId, int state, String stateInfo, Successkilled successkilled) {
+	public SeckillExcution(long seckillId, SeckillStateEnum stateEnum, Successkilled successkilled) {
 		super();
 		this.seckillId = seckillId;
-		this.state = state;
-		this.stateInfo = stateInfo;
+		this.state = stateEnum.getState();
+		this.stateInfo = stateEnum.getStateInfo();
 		this.successkilled = successkilled;
 	}
 
-	public SeckillExcution(long seckillId, int state, String stateInfo) {
+	public SeckillExcution(long seckillId, SeckillStateEnum stateEnum) {
 		super();
 		this.seckillId = seckillId;
-		this.state = state;
-		this.stateInfo = stateInfo;
+		this.state = stateEnum.getState();
+		this.stateInfo = stateEnum.getStateInfo();
 	}
 
 	public SeckillExcution() {
