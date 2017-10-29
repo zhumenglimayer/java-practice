@@ -1,10 +1,13 @@
-package SeckillService;
+package com.mayer.seckill.service.impl;
 
 import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import com.mayer.seckill.dao.SeckillDao;
@@ -19,11 +22,14 @@ import com.mayer.seckill.exception.SeckillCloseException;
 import com.mayer.seckill.exception.SeckillException;
 import com.mayer.seckill.service.SeckillService;
 
+@Service
 public class SeckillServiceImpl implements SeckillService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	
+	@Autowired
 	private SeckillDao seckillDao;
-
+	
+	@Autowired
 	private SuccessKilledDao successKilledDao;
 	// 作为md5的盐值，混淆md5
 	private final String salt = "35ghasdjgfdsadsadyu2$^(*%dasda#";
@@ -61,6 +67,7 @@ public class SeckillServiceImpl implements SeckillService {
 	}
 
 	@Override
+	@Transactional
 	public SeckillExcution executeSeckill(long seckillId, long userPhone, String md5)
 			throws SeckillException, RepeatKillException, SeckillCloseException {
 		// TODO Auto-generated method stub
