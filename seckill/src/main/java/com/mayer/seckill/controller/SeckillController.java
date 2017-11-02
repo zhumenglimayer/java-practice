@@ -24,7 +24,7 @@ import com.mayer.seckill.exception.SeckillCloseException;
 import com.mayer.seckill.service.SeckillService;
 
 @Controller
-@RequestMapping("/seckill")
+/*@RequestMapping("/seckill")*/
 public class SeckillController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	

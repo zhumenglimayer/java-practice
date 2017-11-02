@@ -30,6 +30,9 @@
 							<tr>
 								<td>${sk.name }</td>
 								<td>${sk.number }</td>
+								<%-- <td>${sk.startTime }</td>
+								<td>${sk.endTime }</td>
+								<td>${sk.createTime }</td> --%>
 								<td>
 									<fmt:formatDate value="${sk.startTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 								</td>
