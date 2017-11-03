@@ -6,6 +6,9 @@
 <head>
 <title>秒杀列表页</title>
 <%@include file="common/head.jsp"%>
+<%
+	pageContext.setAttribute("APP_PATH", request.getContextPath());
+%>
 </head>
 <body>
 	<div class="container">
@@ -62,14 +65,14 @@
 	src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script
 	src="https://cdn.bootcss.com/jquery-countdown/2.0.2/jquery.countdown.min.js"></script>
-<script type="text/javascript" src="/static/script/seckill.js"></script>
+<script type="text/javascript" src="${APP_PATH }/static/script/seckill.js"></script>
 <script type="text/javascript">
 	$(function(){
 		seckill.detail.init({
-			seckillId : ${seckill.id},
+			seckillId : ${seckill.seckillId},
 			startTime : ${seckill.startTime.time},
 			endTime : ${seckill.endTime.time}
 		});
-	});
+	})
 </script>
 </html>

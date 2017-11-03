@@ -1,7 +1,7 @@
 /.settings/
 /target/
 /eclipse/
-/src/main/webapp/static/
+
   
 # built application files  
 *.apk  
