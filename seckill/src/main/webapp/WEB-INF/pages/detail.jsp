@@ -21,7 +21,7 @@
 					<!--显示Time图标  -->
 					<span class="glyphicon glyphicon-time"></span>
 					<!--展示倒计时  -->
-					<span class="glyphicon seckill-box"></span>
+					<span class="glyphicon" id="seckill-box"></span>
 				</h2>
 			</div>
 		</div>
@@ -63,8 +63,7 @@
 	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script
-	src="https://cdn.bootcss.com/jquery-countdown/2.0.2/jquery.countdown.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
 <script type="text/javascript" src="${APP_PATH }/static/script/seckill.js"></script>
 <script type="text/javascript">
 	$(function(){
