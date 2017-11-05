@@ -12,6 +12,7 @@ import org.springframework.util.DigestUtils;
 
 import com.mayer.seckill.dao.SeckillDao;
 import com.mayer.seckill.dao.SuccessKilledDao;
+import com.mayer.seckill.dao.cache.RedisDao;
 import com.mayer.seckill.dto.Exposer;
 import com.mayer.seckill.dto.SeckillExcution;
 import com.mayer.seckill.entity.Seckill;
@@ -30,6 +31,9 @@ public class SeckillServiceImpl implements SeckillService {
 	private SeckillDao seckillDao;
 	
 	@Autowired
+	private RedisDao redisDao;
+	
+	@Autowired
 	private SuccessKilledDao successKilledDao;
 	// 作为md5的盐值，混淆md5
 	private final String salt = "35ghasdjgfdsadsadyu2$^(*%dasda#";
@@ -46,10 +50,17 @@ public class SeckillServiceImpl implements SeckillService {
 
 	@Override
 	public Exposer exportSeckillUrl(long seckillId) {
-		Seckill seckill = seckillDao.queryById(seckillId);
-		if (seckill == null) {
-			return new Exposer(false, seckillId);
+//		缓存优化
+		Seckill seckill = redisDao.getSeckill(seckillId);
+		if(seckill==null){
+			seckill = seckillDao.queryById(seckillId);
+			if (seckill == null) {
+				return new Exposer(false, seckillId);
+			}else{
+				redisDao.putSeckill(seckill);
+			}
 		}
+		
 		Date startTime = seckill.getStartTime();
 		Date endTime = seckill.getEndTime();
 		Date nowTime = new Date();

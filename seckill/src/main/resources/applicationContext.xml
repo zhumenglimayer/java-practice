@@ -61,5 +61,10 @@
 	
 	<!--默认使用注解来管理事务行为  -->
 	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+	
+	<bean id="redisDao" class="com.mayer.seckill.dao.cache.RedisDao">
+		<constructor-arg index="0" value="localhost"></constructor-arg>
+		<constructor-arg index="1" value="6379"></constructor-arg>
+	</bean>
 
 </beans>
